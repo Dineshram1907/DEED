@@ -24,7 +24,7 @@ export default defineConfig({
                 res.statusCode = result.success ? 200 : 400
                 res.setHeader('Content-Type', 'application/json')
                 res.end(JSON.stringify(result))
-              } catch (err) {
+              } catch {
                 res.statusCode = 500
                 res.setHeader('Content-Type', 'application/json')
                 res.end(JSON.stringify({ success: false, message: 'Server processing error.' }))

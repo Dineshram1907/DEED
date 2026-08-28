@@ -1,65 +1,120 @@
 import type { Project } from '../types';
 
+export type { Project as ProjectItem };
+
 export const PROJECTS: Project[] = [
   {
-    id: 'virundhaalaya',
+    id: 'virundhalayaa',
     number: '01',
-    title: 'VIRUNDHAALAYA',
-    client: 'Virundhaalaya Hospitality',
-    category: 'Brand',
-    tags: ['Brand Identity', 'Web Design', 'Digital Experience', 'Menu & Subscriptions'],
+    title: 'Virundhalayaa',
+    client: 'Virundhalayaa',
+    category: 'Cloud Kitchen',
+    tags: ['Cloud Kitchen', 'Branding', 'Digital Experience'],
     year: '2025',
-    description: 'A digital experience for a food business built around its menu, ordering, catering and subscription journeys.',
-    longDescription: 'Virundhaalaya required an immersive digital presence that reflects its culinary heritage while streamlining multi-tier customer touchpoints. DEED brought strategy, brand aesthetics, and custom web development together to build a platform that turns food discovery into effortless orders, catering requests, and recurring meal subscriptions.',
-    challenge: 'A real food business needed a digital experience that makes its offering easier to discover and act on across menu browsing, catering packages, and meal plans.',
-    solution: 'We engineered an editorial web experience featuring intuitive menu navigation, appetising culinary visual direction, and responsive booking and subscription flows.',
-    status: 'Completed • Live',
-    externalUrl: 'https://www.virundhalayaa.com/',
-    liveUrlLabel: 'Visit Live Project →',
-    heroImage: '/images/work/virundhaalaya/hero.webp',
-    secondaryImage: '/images/work/virundhaalaya/secondary.webp',
-    gallery: [
-      '/images/work/virundhaalaya/hero.webp',
-      '/images/work/virundhaalaya/secondary.webp',
-      '/images/work/virundhaalaya/gallery-1.webp'
+    heroImage: '/images/work/virundhalayaa-cover.webp',
+    gallery: ['/images/work/virundhalayaa-cover.webp'],
+    description: 'Brand and digital experience for a modern cloud kitchen, featuring direct order dispatch and culinary storytelling.',
+    longDescription: 'Virundhalayaa is a modern cloud kitchen dedicated to authentic culinary delivery. DEED engineered the complete digital presence, direct WhatsApp order routing, and branded packaging system.',
+    challenge: 'Managing high-volume multi-channel food orders and menu updates without high third-party aggregator commissions.',
+    approach: 'We designed an ultra-fast mobile-first digital storefront with direct order dispatch, real-time kitchen item availability, and branded culinary storytelling.',
+    whatWeBuilt: [
+      'Direct order routing & WhatsApp ordering interface',
+      'Real-time dynamic menu with dietary tagging',
+      'High-speed mobile responsive web application',
+      'Complete brand identity & packaging guidelines'
     ],
-    deliverables: [
-      'Brand Identity & Visual System',
-      'Editorial Web Design',
-      'Menu & Ordering UX',
-      'Catering & Subscription Architecture',
-      'TypeScript Frontend Development'
-    ],
-    isClientWork: true,
-    layoutType: 'large'
+    designSystemOverview: 'Warm earthy spice tones, refined typography, and high-fidelity food presentation built for rapid mobile conversion.',
+    technologies: ['React 19', 'TypeScript', 'Tailwind CSS', 'Vite', 'Framer Motion'],
+    deliverables: ['Brand Design', 'Web Architecture', 'UI/UX Design', 'Frontend Engineering'],
+    outcome: 'A unified digital ordering engine that established direct customer loyalty and accelerated daily cloud kitchen delivery volume.',
+    slug: '/work/virundhalayaa',
+    externalUrl: 'https://virundhalayaa.com',
+    status: 'LIVE CLIENT',
+    isClientWork: true
   },
   {
     id: 'nexovate',
     number: '02',
-    title: 'NEXOVATE',
-    client: 'Nexovate Education',
-    category: 'Product',
-    tags: ['Edutech Product', 'UI/UX Architecture', 'Web Application', 'TypeScript'],
-    year: '2026',
-    description: 'An edutech platform designed and developed to empower students to learn things that create real value in their lives.',
-    longDescription: 'Nexovate believes students should not only consume information—they should acquire practical knowledge and skills that create tangible real-world value. DEED is designing and developing the core Nexovate product experience around this philosophy.',
-    challenge: 'Designing an educational interface that keeps learners active, focused on skill application, and motivated without distraction.',
-    solution: 'Formulating a tokenized modular interface with contextual progress tracking, interactive skill canvases, and low-latency canvas rendering.',
-    status: 'Currently in development',
-    heroImage: '/images/work/nexovate/hero.webp',
-    secondaryImage: '/images/work/nexovate/secondary.webp',
-    gallery: [
-      '/images/work/nexovate/hero.webp',
-      '/images/work/nexovate/secondary.webp',
-      '/images/work/nexovate/gallery-1.webp'
+    title: 'Nexovate',
+    client: 'Nexovate',
+    category: 'Education / Digital Product',
+    tags: ['EdTech', 'Product Architecture', 'Learning Portal'],
+    year: '2025',
+    heroImage: '/images/work/nexovate-cover.webp',
+    gallery: ['/images/work/nexovate-cover.webp'],
+    description: 'Digital design and technology work for an education-focused business bridging theory and software mastery.',
+    longDescription: 'Nexovate bridges academic fundamentals with hands-on software development. DEED architected the student learning interface, curriculum player, and mentor feedback system.',
+    challenge: 'Students experienced fragmentation across multiple disjointed video, code exercise, and assignment tools.',
+    approach: 'We created an integrated learning portal with modular course tracks, code sandboxes, and milestone tracking.',
+    whatWeBuilt: [
+      'Student learning portal & course progression engine',
+      'Interactive curriculum roadmap & module player',
+      'Mentor-student evaluation interface',
+      'Accessible design token system for EdTech'
     ],
-    deliverables: [
-      'Edutech Product UX Strategy',
-      'Interface Architecture',
-      'Interactive Figma Prototypes',
-      'React & TypeScript Engineering'
+    designSystemOverview: 'High-contrast typography, focused distraction-free reading states, and structured data hierarchy.',
+    technologies: ['React 19', 'TypeScript', 'Tailwind CSS', 'Node.js', 'Vite'],
+    deliverables: ['Product Strategy', 'UI/UX Architecture', 'Web Application', 'Design System'],
+    outcome: 'An engaging, frictionless learning experience that increased student course completion and structured technical mentoring.',
+    slug: '/work/nexovate',
+    externalUrl: 'https://nexovate.in',
+    status: 'ACTIVE PLATFORM',
+    isClientWork: true
+  },
+  {
+    id: 'billing-software',
+    number: '03',
+    title: 'Billing Software',
+    client: 'DEED Labs / Commercial Product',
+    category: 'Business Software',
+    tags: ['SaaS', 'POS & Invoicing', 'Business Software'],
+    year: '2025',
+    heroImage: '/images/work/billing-software-cover.jpg',
+    gallery: ['/images/work/billing-software-cover.jpg'],
+    description: 'A billing software product being designed and built by DEED for lightning-fast merchant checkout and inventory control.',
+    longDescription: 'Billing Software is a high-speed Point-of-Sale, invoicing, and inventory intelligence platform engineered by DEED to replace bloated legacy desktop billing software.',
+    challenge: 'Existing retail billing software is slow, cluttered, prone to crashes, and difficult for non-technical staff to operate during rush hours.',
+    approach: 'We architected a keyboard-first, sub-second checkout interface with offline-first persistence, automated invoice generation, and inventory synchronization.',
+    whatWeBuilt: [
+      'Sub-second keyboard-optimized POS checkout screen',
+      'Automated GST/tax calculation & PDF/thermal receipt engine',
+      'Real-time inventory decrement & reorder alert system',
+      'Daily revenue analytics & merchant reporting dashboard'
     ],
-    isClientWork: true,
-    layoutType: 'wide'
+    designSystemOverview: 'High-clarity data displays, high-contrast numerals, and zero-distraction dark/light interface tokens.',
+    technologies: ['React 19', 'TypeScript', 'Tailwind CSS', 'IndexedDB / SQLite', 'Vite'],
+    deliverables: ['Product Architecture', 'UI/UX Design', 'Frontend Engineering', 'State Management'],
+    outcome: 'A resilient, friction-free business tool that cuts transaction checkout time down to under 5 seconds per customer.',
+    slug: '/work/billing-software',
+    status: 'IN DEVELOPMENT',
+    isClientWork: false
+  },
+  {
+    id: 'small-design-works',
+    number: '04',
+    title: 'Small Design Works',
+    client: 'Selected Clients',
+    category: 'Branding / UI / Web',
+    tags: ['Visual Identity', 'Typography', 'UI Design'],
+    year: '2024–2025',
+    heroImage: '/images/work/small-design-works-cover.jpg',
+    gallery: ['/images/work/small-design-works-cover.jpg'],
+    description: 'Curated micro-identities, typographic systems, and focused digital interfaces crafted for early-stage ventures.',
+    longDescription: 'A collection of focused design initiatives by DEED spanning custom brand identities, design systems, editorial layouts, and high-conversion landing page prototypes for emerging founders.',
+    challenge: 'Early-stage projects needing distinct, memorable design systems without bloated agency timelines.',
+    approach: 'We apply concentrated design sprints focusing on core brand tokens, high-readability typography, and tailored digital assets.',
+    whatWeBuilt: [
+      'Bespoke brand identities and vector logomarks',
+      'Custom typography guidelines & color token systems',
+      'Rapid interactive web and UI prototypes',
+      'Physical print collateral & digital asset libraries'
+    ],
+    designSystemOverview: 'Clean geometric layouts, editorial typography pairings, and generous negative space.',
+    technologies: ['Figma', 'Illustrator', 'React 19', 'Tailwind CSS'],
+    deliverables: ['Brand Identity', 'Typography System', 'Interface Design', 'Art Direction'],
+    outcome: 'Elevated early-stage ventures with distinct, professional visual identities and immediate market credibility.',
+    slug: '/work/small-design-works',
+    status: 'CURATED ARCHIVE',
+    isClientWork: true
   }
 ];

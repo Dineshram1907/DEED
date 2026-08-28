@@ -5,16 +5,22 @@ export interface ProjectMetric {
 
 export interface Project {
   id: string;
+  slug: string;
   number: string;
   title: string;
   client: string;
-  category: 'Brand' | 'Product' | 'Web' | 'UI/UX' | 'Development' | 'Education';
+  category: string;
   tags: string[];
   year: string;
   description: string;
   longDescription: string;
   challenge: string;
-  solution: string;
+  approach: string;
+  solution?: string;
+  whatWeBuilt: string[];
+  designSystemOverview?: string;
+  technologies: string[];
+  outcome: string;
   status?: string;
   externalUrl?: string;
   liveUrlLabel?: string;
@@ -23,34 +29,58 @@ export interface Project {
   gallery: string[];
   deliverables: string[];
   isClientWork: boolean;
-  layoutType: 'large' | 'tall' | 'wide' | 'standard';
-  metrics?: ProjectMetric[];
 }
 
-export interface OwnProduct {
+export interface OwnProductStory {
   id: string;
-  number: string;
+  slug: string;
+  badge: string;
   title: string;
-  category: string;
   tagline: string;
   headline: string;
   description: string;
-  longStory: string;
   status: string;
   heroImage: string;
-  highlights: string[];
-  externalUrl?: string;
+  problem: string;
+  vision: string;
+  whatItDoes: string;
+  coreExperience: {
+    title: string;
+    description: string;
+  }[];
+  principles: {
+    title: string;
+    description: string;
+  }[];
+  currentStage: string;
+  futureDirection: string;
+  pillars?: {
+    question: string;
+    answer: string;
+    bullet: string;
+  }[];
+  steps?: {
+    num: string;
+    label: string;
+    desc: string;
+  }[];
 }
 
-export interface Service {
+export interface TechService {
   number: string;
   id: string;
   title: string;
-  subtitle?: string;
-  description: string;
-  deliverables: string[];
+  category: string;
+  shortDescription: string;
+  description?: string;
+  whatWeBuild: string[];
+  deliverables?: string[];
+  whyItMatters: string;
+  whatClientGets: string[];
   image: string;
 }
+
+export interface Service extends TechService {}
 
 export interface ProcessStep {
   number: string;
@@ -61,19 +91,17 @@ export interface ProcessStep {
   keyOutcome?: string;
 }
 
-export interface Principle {
-  number: string;
-  title: string;
-  tagline?: string;
-  highlight?: string;
-  description: string;
-  tag?: string;
-}
-
 export interface CapabilityCategory {
   title: string;
   description: string;
   items: string[];
+}
+
+export interface Principle {
+  number: string;
+  title: string;
+  tagline?: string;
+  description: string;
 }
 
 export interface ProjectInquiryData {
@@ -87,3 +115,5 @@ export interface ProjectInquiryData {
   timeline: string;
   botcheck?: string;
 }
+
+
