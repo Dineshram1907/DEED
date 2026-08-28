@@ -1,75 +1,51 @@
-export interface IdentityProductStory {
-  id: string;
-  badge: string;
-  title: string;
-  tagline: string;
-  headline: string;
-  description: string;
-  status: string;
-  heroImage: string;
-  pillars: {
-    question: string;
-    answer: string;
-    bullet: string;
-  }[];
-  steps: {
-    num: string;
-    label: string;
-    desc: string;
-  }[];
-}
+import type { OwnProductStory } from '../types';
 
-export const IDENTITY_PRODUCT: IdentityProductStory = {
+export const IDENTITY_PRODUCT: OwnProductStory = {
   id: 'identity',
-  badge: 'A PRODUCT BY DEED',
-  title: 'IDENTITY',
-  tagline: 'Who are you becoming?',
-  headline: 'A digital experience designed to help people create a new identity, define who they want to become, and move toward meaningful goals.',
-  description: 'Identity is DEED’s proprietary product—an operating system for deliberate personal transformation, character architecture, and goal execution.',
-  status: 'In Active Development • Private Build',
+  slug: '/products/identity',
+  badge: 'PROPRIETARY PRODUCT',
+  title: 'Identity',
+  tagline: "A system for becoming the person you're trying to become.",
+  headline: 'Identity helps people define who they want to become, establish meaningful goals, and build systems around those goals.',
+  description: 'Identity is an internal product currently being designed and engineered by DEED. It approaches personal trajectory and habit formation with the same systems-level precision we apply to software architecture.',
+  status: 'In Active Development',
   heroImage: '/images/work/identity/identity-product-ui.jpg',
-  pillars: [
+  problem: 'Most goal-setting approaches fail because they focus only on outcomes rather than systems and identity. Without structured clarity on personal standards and daily trajectory, long-term ambitions dissolve into passive drift.',
+  vision: 'To build a focused digital system where individuals can architect who they want to become, connect high-level goals with daily actions, and maintain clear visibility over their long-term trajectory.',
+  whatItDoes: 'Identity provides a structured workspace to define personal standards, align milestone trajectories, and track consistency without noisy gamification or superficial metrics.',
+  coreExperience: [
     {
-      question: 'WHAT IS IT?',
-      answer: 'A digital architecture and web application designed to help people define their aspirational identity model and turn intention into compounding reality.',
-      bullet: 'Personal Transformation Architecture'
+      title: 'Identity Definition',
+      description: 'Define your core principles, aspirational standards, and non-negotiable personal values.'
     },
     {
-      question: 'WHY DOES IT EXIST?',
-      answer: 'Most people drift without a clear definition of who they want to become. Identity replaces vague resolutions with structured trajectory and intentional accountability.',
-      bullet: 'Bridging Ambition & Daily Execution'
+      title: 'Trajectory & Milestones',
+      description: 'Break long-term ambitions into logical stages and clear operational priorities.'
     },
     {
-      question: 'WHO IS IT FOR?',
-      answer: 'Builders, founders, designers, and ambitious individuals who refuse passive drift and choose deliberate, self-directed evolution.',
-      bullet: 'High-Agency Builders & Thinkers'
+      title: 'Daily System Alignment',
+      description: 'Connect high-level identity goals directly with daily execution rituals.'
     },
     {
-      question: 'WHAT DOES IT HELP PEOPLE DO?',
-      answer: 'Define core identity pillars, establish milestone trajectories, commit to daily non-negotiable rituals, and visually observe progress compound over time.',
-      bullet: 'Clarity, Trajectory & Compounding Growth'
+      title: 'Progress Visibility',
+      description: 'Review consistency and trajectory feedback loops over weeks and months.'
     }
   ],
-  steps: [
+  principles: [
     {
-      num: '01',
-      label: 'Identity Model',
-      desc: 'Formulate your aspirational archetypes, core principles, and non-negotiable standards.'
+      title: 'Systems Over Motivation',
+      description: 'Sustainable change comes from reliable environments and deliberate systems, not transient bursts of motivation.'
     },
     {
-      num: '02',
-      label: 'Trajectory Roadmap',
-      desc: 'Map long-term milestones with connected dependency paths and dynamic target dates.'
+      title: 'Clarity Over Complexity',
+      description: 'A tool should illuminate your focus, not create administrative overhead or excessive data entry.'
     },
     {
-      num: '03',
-      label: 'Daily Intention Commitments',
-      desc: 'Lock in focused daily action sprints linked directly to your core identity model.'
-    },
-    {
-      num: '04',
-      label: 'Compound Transformation',
-      desc: 'Measure consistency, eliminate friction, and review real progress feedback loops.'
+      title: 'Long-Term Compounding',
+      description: 'Small, non-negotiable daily actions compound into significant character and capability evolution over time.'
     }
-  ]
+  ],
+  currentStage: 'Concept & Interface Architecture Phase. Currently refining core user workflows and interactive prototypes.',
+  futureDirection: 'Private testing with early builders and founders, followed by web platform availability.'
 };
+

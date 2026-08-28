@@ -6,17 +6,17 @@ import { SectionHeader } from '../common/SectionHeader';
 import { Button } from '../common/Button';
 
 interface OwnProductProps {
-  onOpenInquiry: () => void;
+  onOpenInquiry?: () => void;
 }
 
 export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const pillarIcons = [
-    <Compass className="w-4 h-4 text-[#FA3800]" />,
-    <Target className="w-4 h-4 text-[#FA3800]" />,
-    <Shield className="w-4 h-4 text-[#FA3800]" />,
-    <Cpu className="w-4 h-4 text-[#FA3800]" />
+    <Compass key="compass" className="w-4 h-4 text-[#FA3800]" />,
+    <Target key="target" className="w-4 h-4 text-[#FA3800]" />,
+    <Shield key="shield" className="w-4 h-4 text-[#FA3800]" />,
+    <Cpu key="cpu" className="w-4 h-4 text-[#FA3800]" />
   ];
 
   return (
@@ -70,16 +70,16 @@ export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) 
               </div>
             </div>
 
-            {/* How It Works — 4 Progressive Micro Steps */}
+            {/* How It Works — Progressive Micro Steps */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              {IDENTITY_PRODUCT.steps.map((step) => (
-                <div key={step.num} className="p-3 rounded-xl bg-[#181816] border border-[#262624] space-y-1">
+              {IDENTITY_PRODUCT.coreExperience.map((step, idx) => (
+                <div key={step.title} className="p-3 rounded-xl bg-[#181816] border border-[#262624] space-y-1">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[10px] text-[#FA3800] font-bold">{step.num}</span>
-                    <span className="w-1 h-1 rounded-full bg-[#FA3800]" />
+                    <span className="font-mono text-[10px] text-[#2563EB] font-bold">0{idx + 1}</span>
+                    <span className="w-1 h-1 rounded-full bg-[#2563EB]" />
                   </div>
-                  <h4 className="text-xs font-bold text-white font-syne truncate">{step.label}</h4>
-                  <p className="text-[10px] text-[#A09E98] leading-tight line-clamp-2">{step.desc}</p>
+                  <h4 className="text-xs font-bold text-white font-syne truncate">{step.title}</h4>
+                  <p className="text-[10px] text-[#A09E98] leading-tight line-clamp-2">{step.description}</p>
                 </div>
               ))}
             </div>
@@ -94,7 +94,7 @@ export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) 
             className="lg:col-span-5 space-y-6"
           >
             <div>
-              <div className="inline-flex items-center gap-2 font-mono text-xs text-[#FA3800] uppercase tracking-widest font-semibold mb-2">
+              <div className="inline-flex items-center gap-2 font-mono text-xs text-[#2563EB] uppercase tracking-widest font-semibold mb-2">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>{IDENTITY_PRODUCT.badge}</span>
               </div>
@@ -110,20 +110,20 @@ export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) 
               {IDENTITY_PRODUCT.headline}
             </p>
 
-            {/* Progressive Story Tabs (What is it, Why does it exist, Who is it for, What does it help do) */}
+            {/* Progressive Story Tabs */}
             <div className="space-y-3 pt-2">
               <div className="flex flex-wrap gap-2">
-                {IDENTITY_PRODUCT.pillars.map((pillar, idx) => (
+                {IDENTITY_PRODUCT.principles.map((principle, idx) => (
                   <button
-                    key={pillar.question}
+                    key={principle.title}
                     onClick={() => setActiveTab(idx)}
                     className={`px-3 py-1.5 rounded-full font-mono text-[11px] uppercase tracking-wider transition-all duration-300 cursor-pointer ${
                       activeTab === idx
-                        ? 'bg-[#FA3800] text-white font-bold shadow-sm'
+                        ? 'bg-[#2563EB] text-white font-bold shadow-sm'
                         : 'bg-[#181816] text-[#A09E98] hover:text-white border border-[#262624]'
                     }`}
                   >
-                    {pillar.question}
+                    {principle.title}
                   </button>
                 ))}
               </div>
@@ -139,13 +139,13 @@ export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) 
                   className="p-5 rounded-2xl bg-[#181816] border border-[#262624] space-y-2"
                 >
                   <div className="flex items-center gap-2">
-                    {pillarIcons[activeTab]}
-                    <span className="font-mono text-xs text-[#FA3800] font-semibold uppercase">
-                      {IDENTITY_PRODUCT.pillars[activeTab].bullet}
+                    {pillarIcons[activeTab % pillarIcons.length]}
+                    <span className="font-mono text-xs text-[#2563EB] font-semibold uppercase">
+                      {IDENTITY_PRODUCT.principles[activeTab]?.title}
                     </span>
                   </div>
                   <p className="text-xs sm:text-sm text-[#D4D2CB] leading-relaxed">
-                    {IDENTITY_PRODUCT.pillars[activeTab].answer}
+                    {IDENTITY_PRODUCT.principles[activeTab]?.description}
                   </p>
                 </motion.div>
               </AnimatePresence>
@@ -157,6 +157,7 @@ export const OwnProductSection: React.FC<OwnProductProps> = ({ onOpenInquiry }) 
                 variant="primary"
                 size="lg"
                 icon="up-right"
+                to="/products/identity"
                 onClick={onOpenInquiry}
                 className="w-full sm:w-auto"
               >

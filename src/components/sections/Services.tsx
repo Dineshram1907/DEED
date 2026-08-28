@@ -94,17 +94,17 @@ export const Services: React.FC = () => {
                       {activeService.title}
                     </h4>
                     <p className="text-xs text-[#A09E98] leading-relaxed mb-6">
-                      {activeService.description}
+                      {activeService.shortDescription}
                     </p>
 
                     <div className="space-y-2">
-                      <span className="font-mono text-[11px] text-[#FA3800] uppercase tracking-wider block">
+                      <span className="font-mono text-[11px] text-[#2563EB] uppercase tracking-wider block">
                         CORE DELIVERABLES
                       </span>
                       <div className="grid grid-cols-1 gap-2">
-                        {activeService.deliverables.slice(0, 4).map((d) => (
+                        {activeService.whatWeBuild.slice(0, 4).map((d) => (
                           <div key={d} className="flex items-center gap-2 text-xs text-[#D4D2CB]">
-                            <CheckCircle2 className="w-3.5 h-3.5 text-[#FA3800]" />
+                            <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
                             <span>{d}</span>
                           </div>
                         ))}
@@ -128,7 +128,7 @@ export const Services: React.FC = () => {
                   className="w-full flex items-center justify-between text-left focus:outline-none min-h-[48px] cursor-pointer"
                 >
                   <div className="flex items-center gap-3.5">
-                    <span className="font-mono text-xs text-[#FA3800] font-bold">
+                    <span className="font-mono text-xs text-[#2563EB] font-bold">
                       0{index + 1} /
                     </span>
                     <h3 className="text-lg sm:text-xl font-bold font-syne text-white">
@@ -136,7 +136,7 @@ export const Services: React.FC = () => {
                     </h3>
                   </div>
                   <ChevronDown className={`w-5 h-5 text-[#A09E98] transition-transform duration-300 ${
-                    isExpanded ? 'rotate-180 text-[#FA3800]' : ''
+                    isExpanded ? 'rotate-180 text-[#2563EB]' : ''
                   }`} />
                 </button>
 
@@ -150,7 +150,7 @@ export const Services: React.FC = () => {
                       className="overflow-hidden pt-3 space-y-4"
                     >
                       <p className="text-xs sm:text-sm text-[#A09E98] leading-relaxed">
-                        {service.description}
+                        {service.shortDescription}
                       </p>
 
                       <div className="rounded-xl overflow-hidden aspect-[16/10] border border-[#262624]">
@@ -158,13 +158,13 @@ export const Services: React.FC = () => {
                       </div>
 
                       <div className="space-y-2 pt-1">
-                        <span className="font-mono text-[11px] text-[#FA3800] uppercase tracking-wider block">
+                        <span className="font-mono text-[11px] text-[#2563EB] uppercase tracking-wider block">
                           DELIVERABLES
                         </span>
                         <div className="grid grid-cols-1 gap-2">
-                          {service.deliverables.map((d) => (
+                          {service.whatWeBuild.map((d) => (
                             <div key={d} className="flex items-center gap-2 text-xs text-[#D4D2CB]">
-                              <CheckCircle2 className="w-3.5 h-3.5 text-[#FA3800]" />
+                              <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
                               <span>{d}</span>
                             </div>
                           ))}
