@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useCallback, useState } from 'react';
+import React, { useRef, useEffect, useCallback } from 'react';
 
 interface ContinuousMarqueeRailProps {
   children: React.ReactNode[];
-  speed?: number; // pixels per frame (default ~0.8px for smooth slow glide)
-  speedSeconds?: number; // legacy alias (maps to speed)
+  speed?: number; // pixels per frame (default ~0.85px for smooth continuous glide)
+  speedSeconds?: number; // legacy alias
   className?: string;
   cardWidthClass?: string; // e.g. "w-[84vw] sm:w-[50vw] md:w-[42vw] max-w-[360px]"
 }
@@ -16,26 +16,22 @@ export const ContinuousMarqueeRail: React.FC<ContinuousMarqueeRailProps> = ({
   cardWidthClass = 'w-[84vw] sm:w-[48vw] lg:w-[380px]'
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
   const animationFrameRef = useRef<number | null>(null);
-  const pauseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const isInteractingRef = useRef<boolean>(false);
-  const [, forceUpdate] = useState({});
 
-  // Resolve speed (pixels per animation frame)
-  const speed = propSpeed ?? (speedSeconds ? Math.max(0.4, 30 / speedSeconds) : 0.8);
-
-  // Mouse drag state
+  // Mouse & Touch Drag Tracking (Immediate 1:1 tactile control, 0 pause state)
   const isDraggingRef = useRef<boolean>(false);
   const startXRef = useRef<number>(0);
   const startScrollLeftRef = useRef<number>(0);
+
+  // Speed in pixels per frame
+  const speed = propSpeed ?? (speedSeconds ? Math.max(0.6, 32 / speedSeconds) : 0.85);
 
   // Quadruple-duplicate items to ensure vast buffer for smooth infinite wrapping
   const items = React.useMemo(() => {
     return [...children, ...children, ...children, ...children];
   }, [children]);
 
-  // Seamless boundary wrap logic
+  // Seamless boundary wrap logic (Conveyor belt wrapping)
   const checkBoundaryWrap = useCallback(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -50,7 +46,7 @@ export const ContinuousMarqueeRail: React.FC<ContinuousMarqueeRailProps> = ({
     }
   }, []);
 
-  // Main Continuous Auto-Scrolling Loop (RAF)
+  // Unstoppable Continuous Conveyor-Belt Loop (Runs forever without hover pause)
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) return;
@@ -58,15 +54,15 @@ export const ContinuousMarqueeRail: React.FC<ContinuousMarqueeRailProps> = ({
     const container = containerRef.current;
     if (!container) return;
 
-    // Initialize scrollLeft to single loop width to allow bi-directional swiping
+    // Initialize scroll position into the buffer
     const initTimer = setTimeout(() => {
       if (container && container.scrollLeft === 0) {
         container.scrollLeft = container.scrollWidth / 4;
       }
-    }, 50);
+    }, 30);
 
     const step = () => {
-      if (!isInteractingRef.current && containerRef.current) {
+      if (containerRef.current && !isDraggingRef.current) {
         containerRef.current.scrollLeft += speed;
         checkBoundaryWrap();
       }
@@ -83,90 +79,65 @@ export const ContinuousMarqueeRail: React.FC<ContinuousMarqueeRailProps> = ({
     };
   }, [speed, checkBoundaryWrap]);
 
-  // Handle interaction start: Pause autoplay immediately
-  const handleInteractionStart = useCallback(() => {
-    isInteractingRef.current = true;
-    if (pauseTimerRef.current) {
-      clearTimeout(pauseTimerRef.current);
-      pauseTimerRef.current = null;
-    }
-  }, []);
-
-  // Handle interaction end: Resume autoplay after exactly 500ms of inactivity
-  const handleInteractionEnd = useCallback(() => {
-    if (pauseTimerRef.current) {
-      clearTimeout(pauseTimerRef.current);
-    }
-    pauseTimerRef.current = setTimeout(() => {
-      isInteractingRef.current = false;
-      pauseTimerRef.current = null;
-      forceUpdate({});
-    }, 500); // Exactly 500ms of inactivity
-  }, []);
-
-  // Manual scroll listener to ensure seamless boundary wrapping during user swipe
-  const handleScroll = useCallback(() => {
-    checkBoundaryWrap();
-    handleInteractionStart();
-    handleInteractionEnd();
-  }, [checkBoundaryWrap, handleInteractionStart, handleInteractionEnd]);
-
-  // Desktop Mouse Drag handlers
-  const handleMouseDown = useCallback((e: React.MouseEvent) => {
+  // Touch Swipe Handlers (Immediate tactile influence, immediate conveyor resume upon release)
+  const handleTouchStart = (e: React.TouchEvent) => {
     const container = containerRef.current;
     if (!container) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.touches[0].pageX - container.offsetLeft;
+    startScrollLeftRef.current = container.scrollLeft;
+  };
 
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDraggingRef.current || !containerRef.current) return;
+    const x = e.touches[0].pageX - containerRef.current.offsetLeft;
+    const walk = (x - startXRef.current) * 1.2;
+    containerRef.current.scrollLeft = startScrollLeftRef.current - walk;
+    checkBoundaryWrap();
+  };
+
+  const handleTouchEnd = () => {
+    isDraggingRef.current = false;
+    checkBoundaryWrap();
+  };
+
+  // Mouse Drag Handlers
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const container = containerRef.current;
+    if (!container) return;
     isDraggingRef.current = true;
     startXRef.current = e.pageX - container.offsetLeft;
     startScrollLeftRef.current = container.scrollLeft;
-    handleInteractionStart();
-  }, [handleInteractionStart]);
+  };
 
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+  const handleMouseMove = (e: React.MouseEvent) => {
     if (!isDraggingRef.current || !containerRef.current) return;
     e.preventDefault();
     const x = e.pageX - containerRef.current.offsetLeft;
-    const walk = (x - startXRef.current) * 1.5; // Drag sensitivity
+    const walk = (x - startXRef.current) * 1.2;
     containerRef.current.scrollLeft = startScrollLeftRef.current - walk;
     checkBoundaryWrap();
-  }, [checkBoundaryWrap]);
+  };
 
-  const handleMouseUp = useCallback(() => {
+  const handleMouseUp = () => {
     if (isDraggingRef.current) {
       isDraggingRef.current = false;
-      handleInteractionEnd();
+      checkBoundaryWrap();
     }
-  }, [handleInteractionEnd]);
-
-  // Clean up timers on unmount
-  useEffect(() => {
-    return () => {
-      if (pauseTimerRef.current) {
-        clearTimeout(pauseTimerRef.current);
-      }
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-    };
-  }, []);
+  };
 
   return (
     <div
       ref={containerRef}
-      onScroll={handleScroll}
-      onTouchStart={handleInteractionStart}
-      onTouchMove={handleInteractionStart}
-      onTouchEnd={handleInteractionEnd}
-      onTouchCancel={handleInteractionEnd}
+      onScroll={checkBoundaryWrap}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onTouchCancel={handleTouchEnd}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onMouseLeave={() => {
-        if (isDraggingRef.current) {
-          isDraggingRef.current = false;
-        }
-        handleInteractionEnd();
-      }}
+      onMouseLeave={handleMouseUp}
       className={`relative w-full overflow-x-auto no-scrollbar py-2 select-none cursor-grab active:cursor-grabbing ${className}`}
       style={{
         WebkitOverflowScrolling: 'touch',
@@ -176,7 +147,6 @@ export const ContinuousMarqueeRail: React.FC<ContinuousMarqueeRailProps> = ({
       }}
     >
       <div
-        ref={trackRef}
         className="flex gap-4 sm:gap-6 w-max"
         style={{ willChange: 'scroll-position' }}
       >
