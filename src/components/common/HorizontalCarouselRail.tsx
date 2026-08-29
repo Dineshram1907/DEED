@@ -28,7 +28,6 @@ export const HorizontalCarouselRail: React.FC<HorizontalCarouselRailProps> = ({
     const container = containerRef.current;
     if (!container || itemCount === 0) return;
 
-    // Small delay to ensure children layout is computed
     const timeout = setTimeout(() => {
       const singleSetWidth = container.scrollWidth / 3;
       container.scrollLeft = singleSetWidth;
@@ -55,17 +54,15 @@ export const HorizontalCarouselRail: React.FC<HorizontalCarouselRailProps> = ({
     const container = containerRef.current;
     if (!container || isInteracting) return;
 
-    // Determine width of first card + gap
     const firstChild = container.firstElementChild as HTMLElement;
     if (!firstChild) return;
 
-    const cardWidth = firstChild.getBoundingClientRect().width + 16; // card width + gap
+    const cardWidth = firstChild.getBoundingClientRect().width + 16;
     container.scrollBy({ left: cardWidth, behavior: 'smooth' });
   }, [isInteracting]);
 
   // Auto-play timer
   useEffect(() => {
-    // Check reduced motion preference
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion || isInteracting) return;
 
@@ -76,33 +73,39 @@ export const HorizontalCarouselRail: React.FC<HorizontalCarouselRailProps> = ({
     };
   }, [advanceNext, autoPlayInterval, isInteracting]);
 
-  // Handle user interaction pause & resume
-  const handleInteractionStart = () => {
+  // Handle user interaction pause & resume after exactly 500ms
+  const handleInteractionStart = useCallback(() => {
     setIsInteracting(true);
     if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
     if (autoPlayTimerRef.current) clearInterval(autoPlayTimerRef.current);
-  };
+  }, []);
 
-  const handleInteractionEnd = () => {
+  const handleInteractionEnd = useCallback(() => {
     if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
     interactionTimeoutRef.current = setTimeout(() => {
       setIsInteracting(false);
-    }, 3500); // resume after 3.5s of no touch
-  };
+    }, 500); // exactly 500ms of inactivity
+  }, []);
 
   return (
     <div
       ref={containerRef}
       onScroll={handleScroll}
       onTouchStart={handleInteractionStart}
+      onTouchMove={handleInteractionStart}
       onTouchEnd={handleInteractionEnd}
+      onTouchCancel={handleInteractionEnd}
+      onPointerDown={handleInteractionStart}
+      onPointerUp={handleInteractionEnd}
+      onPointerCancel={handleInteractionEnd}
       onMouseEnter={handleInteractionStart}
       onMouseLeave={handleInteractionEnd}
       className={`flex overflow-x-auto snap-x snap-mandatory no-scrollbar gap-4 pb-2 w-full select-none cursor-grab active:cursor-grabbing ${className}`}
       style={{
         WebkitOverflowScrolling: 'touch',
         scrollbarWidth: 'none',
-        msOverflowStyle: 'none'
+        msOverflowStyle: 'none',
+        touchAction: 'pan-x'
       }}
     >
       {items.map((child, index) => (
